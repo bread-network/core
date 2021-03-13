@@ -73,6 +73,7 @@ WSGI_APPLICATION = 'bread.wsgi.application'
 # Database
 # https://docs.djangoproject.com/en/3.1/ref/settings/#databases
 
+# TODO: Specify Host of MongoDB Database
 DATABASES = {
     'default': {
         'ENGINE': 'djongo',
