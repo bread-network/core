@@ -44,6 +44,10 @@ class User(AbstractBaseUser):
     username = models.CharField(max_length=constants.MAX_USERNAME_LEN, unique=True)
     name = models.CharField(max_length=constants.MAX_NAME_LEN, default=constants.DEF_NAME)
 
+    active = models.BooleanField(default=True)
+    staff = models.BooleanField(default=False)  # a admin user; non super-user
+    admin = models.BooleanField(default=False)  # a superuser
+
     USERNAME_FIELD = 'username'
     REQUIRED_FIELDS = []  # Email & Password are required by default.
 
@@ -55,5 +59,30 @@ class User(AbstractBaseUser):
 
     def __str__(self):
         return self.username
+
+    def has_perm(self, perm, obj=None):
+        """Does the user have a specific permission?"""
+        # Simplest possible answer: Yes, always
+        return True
+
+    def has_module_perms(self, app_label):
+        """Does the user have permissions to view the app `app_label`?"""
+        # Simplest possible answer: Yes, always
+        return True
+
+    @property
+    def is_staff(self):
+        """Is the user a member of staff?"""
+        return self.staff
+
+    @property
+    def is_admin(self):
+        """Is the user a admin member?"""
+        return self.admin
+
+    @property
+    def is_active(self):
+        """Is the user active?"""
+        return self.active
 
     objects = UserManager()
