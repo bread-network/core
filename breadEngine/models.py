@@ -11,6 +11,8 @@ class Post(models.Model):
     content = models.CharField(max_length=constants.MAX_POST_LEN)
     username = models.CharField(max_length=constants.MAX_USERNAME_LEN)
     created_at = models.DateTimeField(auto_now_add=True)
+    num_likes = models.IntegerField()
+    num_dislikes = models.IntegerField()
 
     def __str__(self):
         return self.content
