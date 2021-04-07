@@ -130,4 +130,5 @@ dmypy.json
 
 .idea
 keys/keys.json
+keys/mongo_keys.json
 /.vscode

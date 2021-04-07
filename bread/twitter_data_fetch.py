@@ -1,4 +1,4 @@
-from keys.get_keys import get_keys_data
+from keys.keys import get_keys_data
 from constants import *
 import tweepy
 
@@ -36,7 +36,7 @@ def get_profile_tweets(user_id, limit=5, offset=0):
     offset = -1
     max_cnt = min(200, limit)
     while len(all_tweets) < limit:
-        api, offset = get_api(offset)
+        api, offset = get_api(offset, cat=1)
         if len(all_tweets) == 0:
             tweets = api.user_timeline(screen_name=user_id, count=max_cnt, include_rts=True, tweet_mode='extended')
         else:
