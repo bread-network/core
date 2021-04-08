@@ -2,6 +2,7 @@
   "ip": "localhost",
   "port": 27017,
   "db": "myDB",
+  "twitter_coll": "my_twitter_coll",
   "username": "username",
   "password": "password"
 }
