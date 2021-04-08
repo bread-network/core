@@ -3,6 +3,7 @@
   "port": 27017,
   "db": "myDB",
   "twitter_coll": "my_twitter_coll",
+  "user_metadata_coll": "my_user",
   "username": "username",
   "password": "password"
 }
