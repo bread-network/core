@@ -1,6 +1,6 @@
 from flask import Flask, request
 from bread.twitter_data_fetch import get_profile_tweets
-from bread.loafs_fetch import get_loaf_names
+from bread.sticks_fetch import get_loaf_names
 import json
 
 

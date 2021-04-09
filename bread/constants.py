@@ -1,4 +1,4 @@
-class LoafConstants:
+class stickConstants:
     # {
     #     'loaf': 'loaf_name'
     #     'text': 'full_text'
