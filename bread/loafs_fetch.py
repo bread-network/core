@@ -1,11 +1,3 @@
-# {
-#     'loaf': 'loaf_name'
-#     'text': 'full_text'
-#     'likes': 'likes_count'
-#     'username': 'username'
-#     'name': 'name'
-# }
-
 from keys.keys import get_sticks_collection
 from bread.constants import LoafConstants
 
