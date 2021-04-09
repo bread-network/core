@@ -1,0 +1,2 @@
+class LoafConstants:
+    LOAF = 'loaf'
