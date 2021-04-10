@@ -1,8 +1,8 @@
 from flask import Flask, request
 from bread.twitter_data_fetch import get_profile_tweets
+from bread.user_fetch import get_verify_user
 from bread.sticks_fetch import get_loaf_names
 import json
-
 
 app = Flask(__name__)
 GET = 'GET'
@@ -13,6 +13,19 @@ json_mime = 'application/json'
 @app.route('/')
 def hello():
     return {'data': 'Welcome to Bread'}
+
+
+@app.route('verify-user', methods=[POST])
+def verify_user():
+    if request.method == POST:
+        data = request.args
+        username = data['username']
+        username = get_verify_user(username)
+        if username is None:
+            resp = {'exists': False}
+        else:
+            resp = {'exists': True}
+        return app.response_class(response=json.dumps(resp), status=200, mimetype=json_mime)
 
 
 @app.route('/get-loafs', methods=[GET])
