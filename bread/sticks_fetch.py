@@ -1,5 +1,5 @@
 from keys.keys import get_sticks_collection
-from bread.constants import StickConstants, _id
+from bread.constants import StickConstants, _id, loaf_image_map, LoafConstants
 
 collection = get_sticks_collection()
 
@@ -8,7 +8,8 @@ def get_loaf_names():
     global collection
     loafs = []
     for i in collection.distinct(StickConstants.LOAF):
-        loafs.append(i)
+        temp = {LoafConstants.NAME: i, LoafConstants.IMAGE: loaf_image_map[i]}
+        loafs.append(temp)
     return loafs
 
 
