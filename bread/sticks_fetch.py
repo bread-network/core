@@ -11,3 +11,11 @@ def get_loaf_names():
     for i in collection.distinct(StickConstants.LOAF):
         loafs.append(i)
     return loafs
+
+
+def get_sticks_of_loaf(loaf):
+    global collection
+    sticks = []
+    for i in collection.find({StickConstants.LOAF: loaf}):
+        sticks.append(i)
+    return sticks

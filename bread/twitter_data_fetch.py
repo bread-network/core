@@ -1,5 +1,5 @@
 from keys.keys import get_keys_data
-from ..constants import Constants
+from constants import Constants
 import tweepy
 
 sample_query = 'Twitter'
