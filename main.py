@@ -2,7 +2,7 @@ from flask import Flask, request
 from flask_cors import CORS
 from bread.twitter_data_fetch import get_profile_tweets
 from bread.user_fetch import get_verify_user, get_user_from_username
-from bread.sticks_fetch import get_loaf_names, get_sticks_of_loaf
+from bread.sticks_fetch import get_loaf_names, get_sticks_of_loaf, get_stick
 import json
 
 app = Flask(__name__)
@@ -37,6 +37,14 @@ def get_user(username):
     if request.method == GET:
         user = get_user_from_username(username)
         resp = {'user': user}
+        return app.response_class(response=json.dumps(resp), status=200, mimetype=json_mime)
+
+
+@app.route('/stick/<stick_id>', methods=[GET])
+def get_my_stick(stick_id):
+    if request.method == GET:
+        stick = get_stick(stick_id)
+        resp = {'stick': stick}
         return app.response_class(response=json.dumps(resp), status=200, mimetype=json_mime)
 
 

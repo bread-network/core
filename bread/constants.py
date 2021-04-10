@@ -20,6 +20,7 @@ class StickConstants:
     TEXT = 'text'
     LIKES = 'favorite_count'
     USER = 'user'
+    ID = 'id'
 
 
 class UserConstants:
