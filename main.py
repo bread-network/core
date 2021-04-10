@@ -2,7 +2,7 @@ from flask import Flask, request
 from flask_cors import CORS
 from bread.twitter_data_fetch import get_profile_tweets
 from bread.user_fetch import get_verify_user, get_user_from_username
-from bread.sticks_fetch import get_loaf_names, get_sticks_of_loaf, get_stick
+from bread.sticks_fetch import get_loaf_names, get_sticks_of_loaf, get_stick, get_like_stick
 from bread.trending_fetch import get_trending
 import json
 
@@ -71,6 +71,28 @@ def get_sticks_of_a_loaf(loaf):
         sticks = get_sticks_of_loaf(loaf)
         resp = {'sticks': sticks,
                 'loaf': loaf}
+        return app.response_class(response=json.dumps(resp), status=200, mimetype=json_mime)
+
+
+@app.route('/stick/like', methods=[POST])
+def like_stick():
+    if request.method == POST:
+        data = request.args
+        stick_id = data['stick_id']
+        get_like_stick(stick_id, positive=True)
+        resp = {'update': True,
+                'stick_id': stick_id}
+        return app.response_class(response=json.dumps(resp), status=200, mimetype=json_mime)
+
+
+@app.route('/stick/dislike', methods=[POST])
+def dislike_stick():
+    if request.method == POST:
+        data = request.args
+        stick_id = data['stick_id']
+        get_like_stick(stick_id, positive=False)
+        resp = {'update': True,
+                'stick_id': stick_id}
         return app.response_class(response=json.dumps(resp), status=200, mimetype=json_mime)
 
 

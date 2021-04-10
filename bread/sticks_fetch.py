@@ -28,3 +28,12 @@ def get_stick(stick_id):
         my_stick = i
         break
     return my_stick
+
+
+def get_like_stick(stick_id, positive=True):
+    global collection
+    if positive:
+        increment_val = 1
+    else:
+        increment_val = -1
+    collection.update({StickConstants.ID: int(stick_id)}, {'$inc': {StickConstants.LIKE_CNT: increment_val}})
