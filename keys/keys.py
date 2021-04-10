@@ -7,11 +7,13 @@ port = None
 db = None
 sticks_coll = None
 user_metadata_coll = None
+trending_coll = None
 username = None
 password = None
 
+
 def get_mongo_creds():
-    global ip, port, db, sticks_coll, user_metadata_coll, username, password
+    global ip, port, db, sticks_coll, user_metadata_coll, trending_coll, username, password
     cur_dir = os.path.dirname(os.path.abspath(__file__))
     file = os.path.join(cur_dir, 'mongo_keys.json')
     with open(file) as f:
@@ -22,6 +24,7 @@ def get_mongo_creds():
     db = data['db']
     sticks_coll = data['sticks_coll']
     user_metadata_coll = data['user_metadata_coll']
+    trending_coll = data['trending_coll']
     username = data['username']
     password = data['password']
 
@@ -58,4 +61,12 @@ def get_user_metadata_collection():
     if db is None:
         db = get_mongo_client()
     coll = db[user_metadata_coll]
+    return coll
+
+
+def get_trending_collection():
+    global db, trending_coll
+    if db is None:
+        db = get_mongo_client()
+    coll = db[trending_coll]
     return coll

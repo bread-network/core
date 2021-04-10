@@ -3,6 +3,7 @@ from flask_cors import CORS
 from bread.twitter_data_fetch import get_profile_tweets
 from bread.user_fetch import get_verify_user, get_user_from_username
 from bread.sticks_fetch import get_loaf_names, get_sticks_of_loaf, get_stick
+from bread.trending_fetch import get_trending
 import json
 
 app = Flask(__name__)
@@ -17,6 +18,14 @@ json_mime = 'application/json'
 @app.route('/')
 def hello():
     return {'data': 'Welcome to Bread'}
+
+
+@app.route('/trending', methods=[GET])
+def get_trending_sticks():
+    if request.method == GET:
+        sticks = get_trending()
+        resp = {'sticks': sticks}
+        return app.response_class(response=json.dumps(resp), status=200, mimetype=json_mime)
 
 
 @app.route('/verify-user', methods=[POST])

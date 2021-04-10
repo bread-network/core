@@ -3,6 +3,7 @@
   "port": 27017,
   "db": "myDB",
   "sticks_coll": "sticks_coll",
+  "trending_coll": "trending_coll",
   "user_metadata_coll": "users_coll",
   "username": "username",
   "password": "password"
