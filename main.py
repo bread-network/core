@@ -96,7 +96,7 @@ def dislike_stick():
         return app.response_class(response=json.dumps(resp), status=200, mimetype=json_mime)
 
 
-@app.route('/profile_tweets', methods=[POST])
+@app.route('/profile-tweets', methods=[POST])
 def profile_tweets():
     if request.method == POST:
         data = request.args
