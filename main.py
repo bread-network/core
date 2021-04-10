@@ -73,7 +73,6 @@ def profile_tweets():
         tweets = get_profile_tweets(username, limit, offset)
         resp = {'tweets': tweets,
                 'username': username}
-        print(resp)
         return app.response_class(response=json.dumps(resp), status=200, mimetype=json_mime)
 
 
