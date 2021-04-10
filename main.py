@@ -4,6 +4,7 @@ from bread.twitter_data_fetch import get_profile_tweets
 from bread.user_fetch import get_verify_user, get_user_from_username
 from bread.sticks_fetch import get_loaf_names, get_sticks_of_loaf, get_stick, get_like_stick
 from bread.trending_fetch import get_trending
+from multiprocessing import Process
 import json
 
 app = Flask(__name__)
@@ -79,7 +80,13 @@ def like_stick():
     if request.method == POST:
         data = request.args
         stick_id = data['stick_id']
-        get_like_stick(stick_id, positive=True)
+        process = Process(
+            target=get_like_stick,
+            args=(stick_id, True),
+            daemon=True
+        )
+        process.start()
+        # get_like_stick(stick_id, positive=True)
         resp = {'update': True,
                 'stick_id': stick_id}
         return app.response_class(response=json.dumps(resp), status=200, mimetype=json_mime)
@@ -90,7 +97,12 @@ def dislike_stick():
     if request.method == POST:
         data = request.args
         stick_id = data['stick_id']
-        get_like_stick(stick_id, positive=False)
+        process = Process(
+            target=get_like_stick,
+            args=(stick_id, False),
+            daemon=True
+        )
+        process.start()
         resp = {'update': True,
                 'stick_id': stick_id}
         return app.response_class(response=json.dumps(resp), status=200, mimetype=json_mime)
