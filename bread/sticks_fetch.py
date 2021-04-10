@@ -24,7 +24,7 @@ def get_sticks_of_loaf(loaf):
 def get_stick(stick_id):
     global collection
     my_stick = None
-    for i in collection.find({StickConstants.ID: stick_id}, {_id: 0}):
+    for i in collection.find({StickConstants.ID: int(stick_id)}, {_id: 0}):
         my_stick = i
         break
     return my_stick
