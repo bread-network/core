@@ -1,4 +1,4 @@
-from bread.constants import UserConstants
+from bread.constants import UserConstants, _id
 from keys.keys import get_user_metadata_collection
 
 
@@ -17,7 +17,7 @@ def get_verify_user(username):
 def get_user_from_username(username):
     global collection
     my_user = None
-    for i in collection.find({UserConstants.USERNAME: username}, ):
+    for i in collection.find({UserConstants.USERNAME: username}, {_id: 0}):
         my_user = i
         break
     return my_user

@@ -1,3 +1,6 @@
+_id = '_id'
+
+
 class StickConstants:
     """
         {
@@ -8,11 +11,10 @@ class StickConstants:
         'name': 'name'
     }
     """
-    LOAF = 'loaf'
+    LOAF = 'annotation.topic'
     TEXT = 'text'
-    LIKES = 'likes'
-    USERNAME = 'username'
-    NAME = 'name'
+    LIKES = 'favorite_count'
+    USER = 'user'
 
 
 class UserConstants:
