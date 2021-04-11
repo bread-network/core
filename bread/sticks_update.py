@@ -6,4 +6,5 @@ collection = get_sticks_collection()
 
 def update_stick_with_annotation(username, stick_id, score):
     # TODO: Implement stick annotation
+    # username -> str, stick_id -> int, score -> float
     pass

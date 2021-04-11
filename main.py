@@ -107,8 +107,8 @@ def annotate_stick():
     if request.method == POST:
         data = request.args
         username = data['username']
-        stick_id = data['stick_id']
-        score = int(data['score'])
+        stick_id = int(data['stick_id'])
+        score = float(data['score'])
         process = Process(
             target=update_stick_with_annotation,
             args=(username, stick_id, score),
