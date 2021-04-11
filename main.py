@@ -4,6 +4,7 @@ from bread.twitter_data_fetch import get_profile_tweets
 from bread.user_fetch import get_verify_user, get_user_from_username, get_annotation_request
 from bread.sticks_fetch import get_loaf_names, get_sticks_of_loaf, get_stick, get_like_stick
 from bread.trending_fetch import get_trending
+from bread.sticks_update import update_stick_with_annotation
 from multiprocessing import Process
 import json
 import random
@@ -101,6 +102,25 @@ def get_sticks_of_a_loaf(loaf):
         return app.response_class(response=json.dumps(resp), status=200, mimetype=json_mime)
 
 
+@app.route('/annotate', methods=[POST])
+def annotate_stick():
+    if request.method == POST:
+        data = request.args
+        username = data['username']
+        stick_id = data['stick_id']
+        score = int(data['score'])
+        process = Process(
+            target=update_stick_with_annotation,
+            args=(username, stick_id, score),
+            daemon=True
+        )
+        process.start()
+        resp = {'update': True,
+                'username': username,
+                'stick_id': stick_id}
+        return app.response_class(response=json.dumps(resp), status=200, mimetype=json_mime)
+
+
 @app.route('/stick/like', methods=[POST])
 def like_stick():
     if request.method == POST:
@@ -112,7 +132,6 @@ def like_stick():
             daemon=True
         )
         process.start()
-        # get_like_stick(stick_id, positive=True)
         resp = {'update': True,
                 'stick_id': stick_id}
         return app.response_class(response=json.dumps(resp), status=200, mimetype=json_mime)
