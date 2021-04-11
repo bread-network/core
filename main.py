@@ -97,7 +97,7 @@ def get_sticks_of_a_loaf(loaf):
     if request.method == GET:
         sticks = get_sticks_of_loaf(loaf)
         random.shuffle(sticks)
-        sticks = sticks[:50]
+        sticks = sticks[:100]
         resp = {'sticks': sticks,
                 'loaf': loaf}
         return app.response_class(response=json.dumps(resp), status=200, mimetype=json_mime)
