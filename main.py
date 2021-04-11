@@ -1,11 +1,12 @@
 from flask import Flask, request
 from flask_cors import CORS
 from bread.twitter_data_fetch import get_profile_tweets
-from bread.user_fetch import get_verify_user, get_user_from_username
+from bread.user_fetch import get_verify_user, get_user_from_username, get_annotation_request
 from bread.sticks_fetch import get_loaf_names, get_sticks_of_loaf, get_stick, get_like_stick
 from bread.trending_fetch import get_trending
 from multiprocessing import Process
 import json
+import random
 
 app = Flask(__name__)
 cors = CORS(app)
@@ -25,20 +26,43 @@ def hello():
 def get_trending_sticks():
     if request.method == GET:
         sticks = get_trending()
+        random.shuffle(sticks)
         resp = {'sticks': sticks}
         return app.response_class(response=json.dumps(resp), status=200, mimetype=json_mime)
 
+@app.route('/annotation-request/<username>/<loaf>', methods=[GET])
+def doannotation(username,loaf):
+    if request.method == GET:
+        anno = get_annotation_request(username,loaf)
+        if anno['annotation']:
+            
+            return app.response_class(response=json.dumps(anno), status=200, mimetype=json_mime)
+        else:
+            response = {'annotation':False}
+            return app.response_class(response=json.dumps(response), status=200, mimetype=json_mime)
 
-@app.route('/verify-user', methods=[POST])
-def verify_user():
-    if request.method == POST:
-        data = request.args
-        username = data['username']
+@app.route('/user-annotation/<username>/<stick_id>', methods=[GET])
+def user_annotation(username,stick_id):
+    if request.method == GET:
+        stick = get_stick(stick_id)
+        user = get_user_from_username(username)
+        myid = user['id']
+        for i in stick['annotation']['annotations']:
+            if list(i.keys())[0] == str(myid):
+                return  app.response_class(response=json.dumps({'score':float(i[str(myid)])}), status=200, mimetype=json_mime)
+        return app.response_class(response=json.dumps({'score':None}), status=200, mimetype=json_mime)
+
+
+@app.route('/verify-user/<username>', methods=[GET])
+def verify_user(username):
+    if request.method == GET:
+        print('here')
         username = get_verify_user(username)
         if username is None:
             resp = {'exists': False}
         else:
-            resp = {'exists': True}
+            user = get_user_from_username(username)
+            resp = {'exists': True,'profile_image_url_https':user['profile_image_url_https']}
         return app.response_class(response=json.dumps(resp), status=200, mimetype=json_mime)
 
 
@@ -70,6 +94,8 @@ def get_loafs():
 def get_sticks_of_a_loaf(loaf):
     if request.method == GET:
         sticks = get_sticks_of_loaf(loaf)
+        random.shuffle(sticks)
+        sticks = sticks[:50]
         resp = {'sticks': sticks,
                 'loaf': loaf}
         return app.response_class(response=json.dumps(resp), status=200, mimetype=json_mime)
