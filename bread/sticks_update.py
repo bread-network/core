@@ -20,5 +20,3 @@ def update_stick_with_annotation(username, stick_id, score):
 
     bakers.update({UserConstants.ID: int(user['id'])},
                   {'$push': {'annotation.annotations': {str(stick_id): str(datetime.now())}}})
-
-    pass
