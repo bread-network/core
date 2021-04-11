@@ -119,6 +119,7 @@ def annotate_stick():
         resp = {'update': True,
                 'username': username,
                 'stick_id': stick_id}
+        print(resp)
         return app.response_class(response=json.dumps(resp), status=200, mimetype=json_mime)
 
 
