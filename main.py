@@ -27,7 +27,6 @@ def hello():
 def get_trending_sticks():
     if request.method == GET:
         sticks = get_trending()
-        random.shuffle(sticks)
         resp = {'sticks': sticks}
         return app.response_class(response=json.dumps(resp), status=200, mimetype=json_mime)
 

@@ -33,6 +33,7 @@ class UserConstants:
     """
     USERNAME = 'screen_name'
     NAME = 'name'
+    ID = 'id'
 
 
 loaf_image_map = {
