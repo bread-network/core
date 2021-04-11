@@ -31,27 +31,29 @@ def get_trending_sticks():
         resp = {'sticks': sticks}
         return app.response_class(response=json.dumps(resp), status=200, mimetype=json_mime)
 
+
 @app.route('/annotation-request/<username>/<loaf>', methods=[GET])
-def doannotation(username,loaf):
+def perform_annotation(username, loaf):
     if request.method == GET:
-        anno = get_annotation_request(username,loaf)
+        anno = get_annotation_request(username, loaf)
         if anno['annotation']:
-            
             return app.response_class(response=json.dumps(anno), status=200, mimetype=json_mime)
         else:
-            response = {'annotation':False}
+            response = {'annotation': False}
             return app.response_class(response=json.dumps(response), status=200, mimetype=json_mime)
 
+
 @app.route('/user-annotation/<username>/<stick_id>', methods=[GET])
-def user_annotation(username,stick_id):
+def user_annotation(username, stick_id):
     if request.method == GET:
         stick = get_stick(stick_id)
         user = get_user_from_username(username)
         myid = user['id']
         for i in stick['annotation']['annotations']:
             if list(i.keys())[0] == str(myid):
-                return  app.response_class(response=json.dumps({'score':float(i[str(myid)])}), status=200, mimetype=json_mime)
-        return app.response_class(response=json.dumps({'score':None}), status=200, mimetype=json_mime)
+                return app.response_class(response=json.dumps({'score': float(i[str(myid)])}), status=200,
+                                          mimetype=json_mime)
+        return app.response_class(response=json.dumps({'score': None}), status=200, mimetype=json_mime)
 
 
 @app.route('/verify-user/<username>', methods=[GET])
@@ -63,7 +65,7 @@ def verify_user(username):
             resp = {'exists': False}
         else:
             user = get_user_from_username(username)
-            resp = {'exists': True,'profile_image_url_https':user['profile_image_url_https']}
+            resp = {'exists': True, 'profile_image_url_https': user['profile_image_url_https']}
         return app.response_class(response=json.dumps(resp), status=200, mimetype=json_mime)
 
 
