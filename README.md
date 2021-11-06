@@ -2,7 +2,7 @@
 
 ## Setup Instructions
 
-### Django Setup
+### Flask Setup
 1. Install dependencies.
 ```shell
 python -m venv env
